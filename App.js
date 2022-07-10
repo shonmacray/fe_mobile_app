@@ -1,13 +1,12 @@
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-import {Text, View} from 'react-native';
+import List from './src/screens/list';
 
 function App() {
-  return (
-    <View>
-      <Text>Helere</Text>
-    </View>
-  );
+  const Stack = createStackNavigator();
+  return <List />;
 }
 
 export default App;
