@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {Text, View, SafeAreaView, StyleSheet, FlatList} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import Button from '../components/Button';
 import ButtonSmall from '../components/ButtonSmall';
 
@@ -41,11 +42,17 @@ function List({navigation}) {
   const openUpdateScreen = item => {
     navigation.navigate('Update', {data: item});
   };
+  const displayTodo = value => {
+    navigation.navigate('View', {value: value});
+  };
 
   const renderItem = ({item}) => {
     return (
       <View style={styles.item}>
-        <Text>{item.value}</Text>
+        <TouchableOpacity onPress={() => displayTodo(item.value)}>
+          <Text>{item.value}</Text>
+        </TouchableOpacity>
+
         <View style={styles.btnContainer}>
           <ButtonSmall onPress={() => openUpdateScreen(item)} title="update" />
           <View style={styles.space} />

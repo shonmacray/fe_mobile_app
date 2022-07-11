@@ -32,7 +32,6 @@ function Update({route}) {
     <SafeAreaView style={styles.container}>
       <View>
         <Text style={styles.text}>Update your Todo</Text>
-
         <TextInput
           style={styles.input}
           value={value}

@@ -1,52 +1,25 @@
-import React, {useState} from 'react';
-import {Text, View, SafeAreaView, TextInput, StyleSheet} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
+import {Text, View, SafeAreaView, StyleSheet} from 'react-native';
 
-import Button from '../components/Button';
+function ViewTodo({route}) {
+  const {value} = route.params;
 
-function ViewTodo() {
-  const [value, setValue] = useState('');
-
-  const handleChange = text => {
-    setValue(text);
-  };
-
-  const saveTodo = async () => {
-    const todos = await AsyncStorage.getItem('todos');
-    const todoId = randomId(20, 'aA0');
-    const newTodo = {id: todoId, value};
-
-    if (todos) {
-      const todoStore = JSON.parse(todos);
-      const newStore = [newTodo, ...todoStore];
-      AsyncStorage.setItem('todos', JSON.stringify(newStore));
-    } else {
-      AsyncStorage.setItem('todos', JSON.stringify([newTodo]));
-    }
-    setValue('');
-  };
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text style={styles.text}>Update your Todo</Text>
+        <Text style={styles.text}>Your Todo</Text>
 
-        <TextInput
-          style={styles.input}
-          value={value}
-          multiline
-          placeholder="Type your todo"
-          onChangeText={handleChange}
-        />
-        <Button onPress={saveTodo} title="Update Todo" />
+        <View style={styles.input}>
+          <Text style={styles.smallTexts}>{value}</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
   input: {
-    height: 200,
     backgroundColor: '#fff',
-    marginBottom: 10,
+    padding: 10,
   },
   text: {
     fontSize: 30,
@@ -54,6 +27,9 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 10,
+  },
+  smallTexts: {
+    fontSize: 23,
   },
 });
 export default ViewTodo;
