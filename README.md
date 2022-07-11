@@ -10,13 +10,17 @@ use git to clone this repo to your computer, open the terminal/cmd in this proje
 
 To Download project dependencies and then:
 
+## For IOS
+
 # npx pod-install ios
 
-To Download and install ios pod for ios
+To Download and install ios pod for ios and
 
 # npx react-native run-ios
 
 To run app in ios simulator
+
+## For ANDRIOD
 
 # npx react-native run-android
 
