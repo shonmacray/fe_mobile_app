@@ -4,24 +4,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Button from '../components/Button';
 
-function Update() {
-  const [value, setValue] = useState('');
+function Update({route}) {
+  const {data} = route.params;
+  const [value, setValue] = useState(data.value);
 
   const handleChange = text => {
     setValue(text);
   };
 
-  const saveTodo = async () => {
-    const todos = await AsyncStorage.getItem('todos');
-    const todoId = randomId(20, 'aA0');
-    const newTodo = {id: todoId, value};
+  const updateTodo = async () => {
+    const store = await AsyncStorage.getItem('todos');
 
-    if (todos) {
-      const todoStore = JSON.parse(todos);
+    if (store) {
+      const newTodo = {id: data.id, value};
+      const todoStore = JSON.parse(store);
+
+      const index = todoStore.findIndex(el => el.id === data.id);
+      // delete old todo
+      todoStore.splice(index, 1);
+
       const newStore = [newTodo, ...todoStore];
       AsyncStorage.setItem('todos', JSON.stringify(newStore));
-    } else {
-      AsyncStorage.setItem('todos', JSON.stringify([newTodo]));
     }
     setValue('');
   };
@@ -37,7 +40,7 @@ function Update() {
           placeholder="Type your todo"
           onChangeText={handleChange}
         />
-        <Button onPress={saveTodo} title="Update Todo" />
+        <Button onPress={updateTodo} title="Update Todo" />
       </View>
     </SafeAreaView>
   );

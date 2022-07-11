@@ -38,12 +38,16 @@ function List({navigation}) {
     }
   };
 
+  const openUpdateScreen = item => {
+    navigation.navigate('Update', {data: item});
+  };
+
   const renderItem = ({item}) => {
     return (
       <View style={styles.item}>
         <Text>{item.value}</Text>
         <View style={styles.btnContainer}>
-          <ButtonSmall title="update" />
+          <ButtonSmall onPress={() => openUpdateScreen(item)} title="update" />
           <View style={styles.space} />
           <ButtonSmall onPress={() => deleteTodo(item.id)} title="delete" />
         </View>
