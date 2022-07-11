@@ -54,9 +54,17 @@ function List({navigation}) {
         </TouchableOpacity>
 
         <View style={styles.btnContainer}>
-          <ButtonSmall onPress={() => openUpdateScreen(item)} title="update" />
+          <ButtonSmall
+            style={styles.update}
+            onPress={() => openUpdateScreen(item)}
+            title="update"
+          />
           <View style={styles.space} />
-          <ButtonSmall onPress={() => deleteTodo(item.id)} title="delete" />
+          <ButtonSmall
+            style={styles.delete}
+            onPress={() => deleteTodo(item.id)}
+            title="delete"
+          />
         </View>
       </View>
     );
@@ -89,16 +97,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
-  },
-  container: {
     paddingHorizontal: 10,
   },
   item: {
     paddingVertical: 10,
     backgroundColor: '#fff',
+    paddingHorizontal: 10,
   },
   line: {
     borderBottomWidth: 1,
+    borderBottomColor: '#e2e2e2',
   },
   btnContainer: {
     flexDirection: 'row',
@@ -107,6 +115,12 @@ const styles = StyleSheet.create({
   },
   space: {
     width: 20,
+  },
+  delete: {
+    backgroundColor: '#CD201F',
+  },
+  update: {
+    backgroundColor: '#410093',
   },
 });
 export default List;
