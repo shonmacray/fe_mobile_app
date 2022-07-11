@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Text, View, SafeAreaView, StyleSheet, FlatList} from 'react-native';
 import Button from '../components/Button';
+import ButtonSmall from '../components/ButtonSmall';
 
 function List({navigation}) {
   const [todos, setTodos] = useState([]);
@@ -24,10 +25,28 @@ function List({navigation}) {
     navigation.navigate('Create');
   };
 
+  const deleteTodo = async id => {
+    const todosData = await AsyncStorage.getItem('todos');
+    if (todosData) {
+      const myTodos = JSON.parse(todosData);
+
+      const index = myTodos.findIndex(el => el.id === id);
+      //   delete todo
+      myTodos.splice(index, 1);
+      AsyncStorage.setItem('todos', JSON.stringify(myTodos));
+      setTodos(myTodos);
+    }
+  };
+
   const renderItem = ({item}) => {
     return (
       <View style={styles.item}>
         <Text>{item.value}</Text>
+        <View style={styles.btnContainer}>
+          <ButtonSmall title="update" />
+          <View style={styles.space} />
+          <ButtonSmall onPress={() => deleteTodo(item.id)} title="delete" />
+        </View>
       </View>
     );
   };
@@ -64,11 +83,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   item: {
-    paddingHorizontal: 10,
     paddingVertical: 10,
+    backgroundColor: '#fff',
   },
   line: {
     borderBottomWidth: 1,
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingTop: 5,
+  },
+  space: {
+    width: 20,
   },
 });
 export default List;
